@@ -10,4 +10,12 @@
       {% endfor %}
     </tr>
   {% endfor %}
+  
+{% endblock %}
+
+{% block form %} 
+  <form id="user-input">
+    <input type="text" name="test_word" id="test-word">
+    <button type ="submit">Submit</button>
+  </form>
 {% endblock %}
