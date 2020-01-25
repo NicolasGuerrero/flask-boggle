@@ -21,9 +21,28 @@ def index():
 @app.route("/test-word", methods=["POST"])
 def test_word():
     """ """
-    # import pdb; pdb.set_trace()
+    
     word = request.json["word"].lower()
     board = session["board_list"]
     result = boggle_game.check_valid_word(board, word)
-   
-    return jsonify(response=result)
+    
+    return jsonify(result=result)
+
+
+@app.route("/add-score", methods=["POST"])
+def add_score():
+    """ """
+
+    score = int(request.json["score"])
+    if session.get("attempts", -1) == -1:
+        session["attempts"] = 1
+        session["high_score"] = score
+    else: 
+        attempts = session["attempts"] 
+        attempts += 1
+        session["attempts"] = attempts
+        if score > session["high_score"]:
+            session["high_score"] = score
+    
+    return jsonify(highScore=session["high_score"], attempts=session["attempts"])
+
